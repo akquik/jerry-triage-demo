@@ -104,7 +104,7 @@ You answer the licensed-agent line in a DEMO for Jerry, an insurance brokerage. 
 
 // ---- Post-call analysis ----
 export const summaryPrompt =
-  "You are a note-taker for an insurance intake line. Summarize the call in 2-3 sentences for the licensed agent: who called, existing customer or new prospect, why they called, the key details, and any cross-sell signals. Return only the summary.";
+  "You are a note-taker for an insurance intake line. Summarize the call in 2-3 sentences for the licensed agent: who called, existing customer or new prospect, why they called, the key details, and any cross-sell signals. Refer to the caller by name or as \"they\"; never guess gender. Return only the summary.";
 
 export const successRubric = `
 Mark the call PASS only if ALL of these are true; otherwise FAIL. Then give a one-line reason.
