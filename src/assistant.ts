@@ -25,17 +25,19 @@ const lookupCustomerTool = {
   type: "code",
   function: {
     name: "lookup_customer",
-    description: "Look up a Jerry customer by phone number, and by name as a fallback. Call right after you have the caller's name.",
+    description: "Look up a Jerry customer by caller ID (automatic), a phone number they give, or their full name. Call right after you have the caller's name.",
     parameters: {
       type: "object",
       properties: {
-        phone: { type: "string", description: "Caller's phone number (from call metadata, or one they give)." },
         name: { type: "string", description: "Caller's full name." },
+        phone: { type: "string", description: "Only if the caller gives a phone number on their account. Caller ID is used automatically otherwise." },
       },
-      required: ["phone"],
+      required: ["name"],
     },
   },
-  code: toolSource("lookup_customer.ts", `const CUSTOMERS: any[] = ${JSON.stringify(customersForTool())};\n`),
+  code: toolSource("lookup_customer.js", `const CUSTOMERS = ${JSON.stringify(customersForTool())};\n`),
+  // Vapi fills in the caller's number on phone calls.
+  environmentVariables: [{ name: "CALLER_PHONE", value: "{{customer.number}}" }],
   messages: [{ type: "request-start", content: "One moment while I pull that up.", blocking: false }],
 };
 
@@ -46,7 +48,7 @@ const logTriageTool = {
     description: "Log the structured triage summary (the context packet for the licensed agent). Call once, right before transferring.",
     parameters: { type: "object", properties: triageFields, required: Object.keys(triageFields) },
   },
-  code: toolSource("log_triage.ts"),
+  code: toolSource("log_triage.js"),
 };
 
 // `destination` is a phone number (+1...) or a SIP URI (sip:...).

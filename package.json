@@ -9,7 +9,7 @@
     "create-assistant": "tsx src/createAssistant.ts",
     "attach-phone": "tsx src/attachPhone.ts",
     "last-call": "tsx src/lastCall.ts",
-    "test-call": "tsx src/testCall.ts",
+    "simulate": "tsx src/simulate.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

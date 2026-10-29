@@ -20,7 +20,7 @@ After the call: Vapi's analysis plan produces a summary, structured data and a p
 `npm run last-call` prints them, plus the context packet.
 ```
 
-Everything runs inside Vapi. The two mock tools are **Vapi Code tools** (TypeScript executed by Vapi), so there's no
+Everything runs inside Vapi. The two mock tools are **Vapi Code tools** (JavaScript executed by Vapi), so there's no
 tool server, no ngrok, and nothing to keep running on your laptop.
 
 ## Setup
@@ -42,7 +42,7 @@ finds existing objects by name) and prints the number to call.
 | `npm run create-assistant` | Creates or updates the triage assistant (and the stand-in agent line). Run this after any edit to `src/config.ts`. |
 | `npm run attach-phone` | Provisions a free Vapi number (or reuses ours) and points it at the triage assistant |
 | `npm run last-call` | Prints the latest call: summary, context packet, structured data, success evaluation, duration |
-| `npm run test-call -- <1-5>` | Rehearsal: the demo number calls itself with an AI caller playing one of the 5 scenarios below |
+| `npm run simulate [-- 1 3]` | Rehearsal: runs the 5 scenarios below as Vapi voice simulations (AI caller vs. the real assistant) and prints pass/fail checks + transcripts. ~2 min. |
 
 ## Tweaking it live
 
@@ -85,6 +85,7 @@ The lookup matches on the caller's phone number **or their full name**, so you c
 ## 5-call test script
 
 Call the number printed by `npm run setup`. After each call, run `npm run last-call` (the analysis takes ~10 seconds to appear).
+To rehearse without a phone, `npm run simulate` runs the same 5 scenarios automatically (all 5 passed at the time of writing).
 
 | # | You say | Expect |
 | --- | --- | --- |
@@ -104,11 +105,17 @@ src/assistant.ts        builds the Vapi assistant payloads (tools, transfer, ana
 src/createAssistant.ts  create/update via the Vapi API, ids saved to .vapi.json
 src/attachPhone.ts      provision/attach the phone number, print the number to call
 src/lastCall.ts         fetch + print the latest call's analysis
-src/testCall.ts         AI-caller rehearsal for the 5 scenarios
+src/simulate.ts         runs the 5 scenarios as Vapi simulations
 src/vapi.ts             tiny REST client + .vapi.json state
-vapi-tools/*.ts         source of the two Code tools (run inside Vapi)
+vapi-tools/*.js         source of the two Code tools (plain JS, run inside Vapi)
 data/customers.json     fictional customers
 ```
+
+## Free-tier limits we hit (and worked around)
+
+- **One free phone number per account.** It's the inbound line, so the stand-in agent line is a SIP address.
+- **Free numbers have a daily outbound-call limit,** so automated testing uses Vapi simulations (`npm run simulate`) instead of placing phone calls.
+- **Text chat (`/chat`) needs a card on file,** so it isn't used.
 
 ## Differences from the original brief
 

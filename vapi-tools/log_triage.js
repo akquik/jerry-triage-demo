@@ -1,4 +1,4 @@
-// Runs inside Vapi as a Code tool (no server of ours involved).
+// Runs inside Vapi as a Code tool (plain JavaScript; no server of ours involved).
 // In production this would push the "context packet" to the licensed agent's screen.
 // Here it just acknowledges; the arguments are stored on the call, and
 // `npm run last-call` prints them as the context packet.

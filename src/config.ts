@@ -36,7 +36,8 @@ export const config = {
   // Warm modes ("warm-transfer-say-summary") need Twilio telephony; free Vapi numbers use "blind-transfer".
   transferMode: env("TRANSFER_MODE", "blind-transfer"),
   // Spoken to the caller right before the transfer.
-  transferMessageToCaller: "Thanks for your patience. I'm connecting you with a licensed agent now, and I've passed along everything you told me.",
+  // (The assistant gives its own recap first; see step 8 of the prompt.)
+  transferMessageToCaller: "Connecting you now. One moment.",
 
   maxCallSeconds: 600,
 
@@ -45,7 +46,6 @@ export const config = {
 };
 
 // ---- The triage assistant's system prompt ----
-// {{customer.number}} is filled in by Vapi with the caller's phone number.
 export const systemPrompt = `
 # Role
 You are the AI intake assistant for Jerry, an insurance comparison and brokerage company (auto, plus home, renters, motorcycle, RV and boat).
@@ -60,7 +60,7 @@ Your only job: identify the caller, understand why they're calling, capture the 
 
 # Call flow
 1. Get the caller's full name (first and last).
-2. Call lookup_customer with phone = "{{customer.number}}" and the name they gave. If they give a different phone number on their account, look that up instead.
+2. Call lookup_customer with their name. Caller ID is checked automatically. If it's not found and they say they're an existing customer, ask once for the phone number on the account and look that up. If still not found, continue as a new prospect.
 3. If found: confirm identity lightly, e.g. "I see a 2021 RAV4 on your account, is that right?" or confirm the ZIP. Don't read back the whole record.
    If not found: treat them as a new prospect. No need to dwell on it.
 4. Ask why they're calling and classify into exactly one call_reason:
@@ -76,7 +76,7 @@ Your only job: identify the caller, understand why they're calling, capture the 
 7. Call log_triage with the structured summary.
    recommended_queue: sales for new_quote; service for policy_question, billing, change_coverage; claims for claim; retention for cancel; service for other.
    urgency: high for claims with injuries or a cancellation effective in the next few days; otherwise normal (low if they're just browsing).
-8. In one or two sentences, tell the caller what happens next and recap what you're passing along, e.g. "I'm connecting you to a licensed agent. I've let them know you're looking to add a motorcycle, so you won't need to repeat yourself."
+8. Say, in one or two sentences, what happens next and recap what you're passing along, e.g. "I'm connecting you to a licensed agent now. I've let them know you'd like a quote for your new motorcycle starting next week, so you won't need to repeat yourself." Say this recap BEFORE calling transferCall, in the same response.
 9. Call transferCall to connect them to the licensed agent.
 
 Aim to finish steps 1 to 9 in about 2 to 3 minutes. If you have the reason and the key details, move on to the transfer.
