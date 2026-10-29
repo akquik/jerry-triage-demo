@@ -1,0 +1,45 @@
+[
+  {
+    "id": "DEMO-001",
+    "name": "Sam Carter",
+    "phone": "+14155550101",
+    "zip": "94110",
+    "policies": [{ "line": "auto", "vehicle": "2021 Toyota RAV4", "status": "active", "renewal_date": "2027-03-14" }],
+    "household": "Owns a condo",
+    "notes": "Mentioned last year they were shopping for a motorcycle.",
+    "fictional": true
+  },
+  {
+    "id": "DEMO-002",
+    "name": "Maya Rodriguez",
+    "phone": "+15125550102",
+    "zip": "78704",
+    "policies": [{ "line": "auto", "vehicle": "2018 Honda Civic", "status": "active", "renewal_date": "2027-06-02" }],
+    "household": "Rents an apartment",
+    "notes": "Auto only. No renters policy on file.",
+    "fictional": true
+  },
+  {
+    "id": "DEMO-003",
+    "name": "Priya Shah",
+    "phone": "+13125550103",
+    "zip": "60614",
+    "policies": [{ "line": "auto", "vehicle": "2020 Subaru Outback", "status": "active", "renewal_date": "2026-11-10" }],
+    "household": "Owns a house",
+    "notes": "Renewal coming up in under two weeks. Premium went up at last renewal.",
+    "fictional": true
+  },
+  {
+    "id": "DEMO-004",
+    "name": "Jordan Lee",
+    "phone": "+12065550104",
+    "zip": "98103",
+    "policies": [
+      { "line": "auto", "vehicle": "2019 Ford F-150", "status": "active", "renewal_date": "2027-01-20" },
+      { "line": "auto", "vehicle": "2015 Mazda 3", "status": "active", "renewal_date": "2027-01-20" }
+    ],
+    "household": "Owns a house. Teenager getting a learner's permit soon.",
+    "notes": "Possible new driver in household.",
+    "fictional": true
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "standInAssistantId": "ef7d90dc-9405-42fc-aea2-457f3f34f81d",
+  "assistantId": "e860dd20-aa91-48b5-b3c7-c184019affe3",
+  "phoneNumberId": "ffb98cd1-a306-4057-8677-76b0bfc3642f",
+  "agentLineId": "e1f957e6-74a8-43aa-ae1c-d9e751c05fad",
+  "agentLineSipUri": "sip:jerry-demo-agent-ef7d90dc@sip.vapi.ai",
+  "phoneNumber": "+16504570037"
+}
