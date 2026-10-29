@@ -7,7 +7,7 @@ const triageFields = {
   customer_found: { type: "boolean", description: "True if lookup_customer found an existing customer." },
   name: { type: "string", description: "Caller's full name." },
   call_reason: { type: "string", enum: callReasons },
-  details: { type: "string", description: "Key details captured, in one or two plain sentences." },
+  details: { type: "string", description: "Key details captured, in one or two plain sentences. Refer to the caller by name or as \"they\"; never guess gender." },
   cross_sell_signals: { type: "array", items: { type: "string" }, description: "e.g. 'rents apartment', 'bought a house', 'motorcycle'. Empty if none." },
   urgency: { type: "string", enum: ["low", "normal", "high"] },
   recommended_queue: { type: "string", enum: queues },
